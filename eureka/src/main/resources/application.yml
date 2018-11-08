@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: eureka_server
+
+server:
+  port: 8761
+
+
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+  instance:
+    hostname: localhost
+
+logging:
+  level:
+    root: ERROR
