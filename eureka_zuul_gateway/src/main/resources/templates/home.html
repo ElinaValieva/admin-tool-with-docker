@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/script.js"></script>
+</head>
+<body>
+<div class="row">
+    <datalist id="listProducts"></datalist>
+    <div class="col-2 shadow-lg p-3 mb-5 bg-white rounded" style="height: 100vh">
+        <img src="images/logo.gif"/><br/><br/>
+        <ul class="nav flex-column">
+            <div sec:authorize="hasRole('ROLE_USER')">
+                <button class="btn btn-outline-pink" id="test">TEST</button>
+            </div>
+            <div sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
+                <button class="btn btn-outline-pink" id="fileBtn">FILE SERVICE</button>
+            </div>
+            <div sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER') and hasPermission(#object, 'ACCESSABLE_SERVICE_A')">
+                <button class="btn btn-outline-pink" id="serviceA">SERVICE A</button>
+            </div>
+            <div sec:authorize="hasRole('ROLE_USER') and hasPermission(#object, 'ACCESSABLE_SERVICE_B')">
+                <button class="btn btn-outline-pink" id="serviceB">SERVICE B</button>
+            </div>
+            <button class="btn btn-outline-pink" style="margin-top: 85%"><a href="/logout">Log out</a></button>
+        </ul>
+    </div>
+    <div class="col">
+        <div sec:authorize="hasRole('ROLE_ADMIN')">
+            <div class="header-panel shadow-lg p-3 mb-5 bg-white rounded" style="background: white">
+                <div class="row">
+                    <div class="col">
+                        <button id="add" class="btn btn-outline-pink">Create user</button>
+                    </div>
+                    <div class="col">
+                        <button id="delete" class="btn btn-outline-pink">Remove user</button>
+                    </div>
+                    <div class="col">
+                        <button id="setAccess" class="btn btn-outline-pink">Set access to role</button>
+                    </div>
+                    <div class="col">
+                        <button id="allAccesses" class="btn btn-outline-pink">Accesses</button>
+                    </div>
+                    <div class="col">
+                        <button id="addAccess" class="btn btn-outline-pink">Create access</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="formServiceA">
+            <form class="form shadow-lg p-3 mb-5 bg-white rounded">
+                <img src="/images/logo.gif"/>
+                <hr/>
+                <div sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
+                    <div sec:authorize="hasRole('ROLE_ADMIN') and hasPermission(#object, 'READONLY_SERVICE_A')">
+                        <button class="btn" id="authInfo">AUTH INFO</button>
+                    </div>
+                    <div sec:authorize="hasPermission(#object, 'READONLY_SERVICE_A')">
+                        <button class="btn" id="serviceName">GET SERVICE NAME</a></button>
+                        <button class="btn" id="getAllProducts">GET ALL PRODUCTS</a></button>
+                    </div>
+                    <div sec:authorize="hasRole('ROLE_ADMIN') and hasPermission(#object, 'READWRITE_SERVICE_A')">
+                        <button class="btn" id="addProduct">ADD PRODUCT</button>
+                        <button class="btn" id="deleteProduct">DELETE</button>
+                        <div id="formAddProduct">
+                            <hr/>
+                            <input type="text" placeholder="productName" id="productName"/>
+                            <input type="text" placeholder="productPrice" id="productPrice"/>
+                            <input type="text" placeholder="productDescription" id="productDescription"/>
+                            <button class="btn" id="addProductBtn">ADD NEW PRODUCT</button>
+
+                        </div>
+                        <div id="formDeleteProduct">
+                            <hr/>
+                            <input type="text" list="listProducts" id="productNameForDeleting"/>
+                            <button class="btn" id="deleteProductBtn">DELETE PRODUCT</button>
+                        </div>
+                    </div>
+                    <label id="result"></label>
+                    <div id="allProducts"></div>
+                </div>
+            </form>
+        </div>
+        <div id="formServiceB">
+            <form class="form shadow-lg p-3 mb-5 bg-white rounded">
+                <img src="/images/logo.gif"/>
+                <hr/>
+                <div sec:authorize="hasRole('ROLE_USER') and hasPermission(#object, 'READONLY_SERVICE_B')">
+                    <button class="btn" id="getProductsForBuying">GET PRODUCTS</button>
+                    <button class="btn" id="getProductsBuying">GET MY BUYING</button>
+                    <button class="btn" id="buyProduct">BUY PRODUCTS</button>
+                </div>
+                <div id="formBuyProduct">
+                    <hr/>
+                    <input type="text" list="listProducts" id="productNameForBuying"/>
+                    <button class="btn" id="buyProductBtn">BUY PRODUCT</button>
+                </div>
+                <div id="allBuyingProducts"></div>
+            </form>
+        </div>
+        <div id="formFileService">
+            <div class="container">
+                <div class="header-panel">
+                    <h4 id="resultFileBtn"></h4>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <form method="post" enctype="multipart/form-data" id="fileUploadForm"
+                              class="formFile shadow-lg p-3 mb-5 bg-white rounded align-items-center">
+                            <label>FILE NAME</label>
+                            <input type="text" name="fileName" placeholder="file name"/><br/>
+                            <label>DURATION DATE</label>
+                            <input type="datetime-local" value="2018-09-24T19:30:00" step="1"
+                                   name="dateDurationDescription"/><br/>
+                            <label>FILE</label>
+                            <input type="file" name="multipartFile"/><br/>
+                            <button id="btnSubmit" class="btn">UPLOAD</button>
+                        </form>
+                    </div>
+                    <div class="col">
+                        <form method="get" class="formFile shadow-lg p-3 mb-5 bg-white rounded">
+                            <label>KEY</label>
+                            <input type="text" placeholder="key for downloading ..." id="tokenKey"/><br/>
+                            <button id="downloadBtn" class="btn">DOWNLOAD</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="formAdminService">
+            <div class="col">
+                <datalist id="listOpportunities"></datalist>
+                <datalist id="listRoles"></datalist>
+                <datalist id="listServices"></datalist>
+                <datalist id="listTypesAccess"></datalist>
+
+                <form class="form shadow-lg p-3 mb-5 bg-white rounded" id="formCreate">
+                    <img src="images/logo.gif"/>
+                    <input type="text" placeholder="NAME" id="name"/>
+                    <input type="text" placeholder="LOGIN" id="login"/>
+                    <div id="listRolesId"></div>
+                    <input type="password" placeholder="PASSWORD" id="pass1"/>
+                    <input type="password" placeholder="REPEAT PASSWORD" id="pass2"/>
+                    <button class="btn" id="createUser">CREATE USER</button>
+                </form>
+
+                <form class="form shadow-lg p-3 mb-5 bg-white rounded" id="formChange">
+                    <img src="images/logo.gif"/>
+                    <div class="row">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-4">
+                                    <input type="radio" id="radioUsername" name="search"/>
+                                </div>
+                                <div class="col">
+                                    <label class="text-center">BY LOGIN</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-4">
+                                    <input type="radio" id="radioDetail" name="search"/>
+                                </div>
+                                <div class="col">
+                                    <label class="text-center">BY NAME</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="text" placeholder="users" autocomplete="off" list="listOpportunities"
+                           id="searchingValue"/>
+                    <button class="btn" id="deleteBtn">DELETE USER</button>
+                </form>
+                <form class="form shadow-lg p-3 mb-5 bg-white rounded" id="formOpportunity">
+                    <img src="images/logo.gif"/><br/>
+                    <input type="text" placeholder="ROLES" list="listRoles" id="role"/>
+                    <div id="opportunities"></div>
+                    <button id="grantOpportunities" class="btn">CHANGE OPPORTUNITIES</button>
+                </form>
+
+                <form class="form shadow-lg p-3 mb-5 bg-white rounded" id="formCreateAccess">
+                    <img src="images/logo.gif"/>
+                    <input type="text" placeholder="DESCRIPTION" id="nameAccess"/>
+                    <input type="text" placeholder="SERVICE" list="listServices" id="services"/>
+                    <input type="text" placeholder="TYPE ACCESS" list="listTypesAccess" id="typesAccesses"/>
+                    <button class="btn" id="createAccess">CREATE ACCESS</button>
+                </form>
+
+                <form class="form shadow-lg p-3 mb-5 bg-white rounded" id="formGetAccess">
+                    <img src="images/logo.gif"/>
+                    <input type="text" placeholder="ROLES" list="listRoles" id="roleNameFormGetAccess"
+                           style="width: 90%"/>
+                    <div id="accesses"></div>
+                    <button class="btn" id="findAccess">FIND ACCESS</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
