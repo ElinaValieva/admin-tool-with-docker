@@ -1,0 +1,91 @@
+version: '2'
+services:
+  db:
+    image: postgres:latest
+    container_name: file_db
+    environment: 
+      - POSTGRES_DB=filedb
+      - POSTGRES_USER=filedb
+      - POSTGRES_PASSWORD=filedb
+    ports:
+      - "5440:5432"
+      
+  db_admin:
+    image: postgres:latest
+    container_name: admin_db
+    environment: 
+      - POSTGRES_DB=admindb
+      - POSTGRES_USER=admindb
+      - POSTGRES_PASSWORD=admindb
+    ports:
+      - "5441:5432"
+      
+  eureka:
+    build: ./eureka
+    ports:
+      - "8761:8761"
+  
+  eureka_client_admin:
+    build: ./eureka_client_service_admin
+    depends_on:
+      - eureka
+      - db_admin
+    ports:
+      - "8092:8092"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db_admin:5432/admindb
+      SPRING_DATASOURCE_USERNAME: admindb
+      SPRING_DATASOURCE_PASSWORD: admindb
+      
+  eureka_client_a:
+    build: ./eureka_client_service_a
+    depends_on:
+      - eureka
+      - db_admin
+    ports:
+      - "8088:8088"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db_admin:5432/admindb
+      SPRING_DATASOURCE_USERNAME: admindb
+      SPRING_DATASOURCE_PASSWORD: admindb
+      
+  eureka_client_b:
+    build: ./eureka_client_service_b
+    depends_on:
+      - eureka
+      - db_admin
+    ports:
+      - "8089:8089"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db_admin:5432/admindb
+      SPRING_DATASOURCE_USERNAME: admindb
+      SPRING_DATASOURCE_PASSWORD: admindb
+      
+  eureka_zuul_gateway:
+    build: ./eureka_zuul_gateway
+    depends_on:
+      - eureka
+      - db_admin
+    ports:
+      - "8090:8090"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db_admin:5432/admindb
+      SPRING_DATASOURCE_USERNAME: admindb
+      SPRING_DATASOURCE_PASSWORD: admindb
+      
+  eureka_client_file:
+    build: ./eureka_client_service_file
+    depends_on:
+      - eureka
+      - db
+    ports:
+      - "8091:8091"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/filedb
+      SPRING_DATASOURCE_USERNAME: filedb
+      SPRING_DATASOURCE_PASSWORD: filedb
