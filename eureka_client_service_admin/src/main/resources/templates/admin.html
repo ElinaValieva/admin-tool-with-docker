@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<meta charset="UTF-8"/>
+<title>Title</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="css/style.css"/>
+<script src="js/jquery-3.3.1.js"></script>
+<script src="js/script.js"></script>
+</head>
+<body>
+<div class="row">
+    <div class="col-2 shadow-lg p-3 mb-5 bg-white rounded" style="height: 100vh">
+        <img src="images/logo.gif"/><br/><br/>
+        <ul class="nav flex-column">
+            <button id="add" class="btn btn-outline-pink">Create user</button>
+            <button id="delete" class="btn btn-outline-pink">Remove user</button>
+            <button id="setAccess" class="btn btn-outline-pink">Set access to role</button>
+            <button id="allAccesses" class="btn btn-outline-pink">Accesses</button>
+            <button id="addAccess" class="btn btn-outline-pink">Create access</button>
+            <button class="btn btn-outline-pink" style="margin-top: 85%"><a href="/logout">Log out</a></button>
+        </ul>
+    </div>
+    <div class="col">
+        <datalist id="listOpportunities"></datalist>
+        <datalist id="listRoles"></datalist>
+        <datalist id="listServices"></datalist>
+        <datalist id="listTypesAccess"></datalist>
+
+        <form class="form shadow-lg p-3 mb-5 bg-white rounded" id="formCreate">
+            <img src="images/logo.gif"/>
+            <input type="text" placeholder="NAME" id="name"/>
+            <input type="text" placeholder="LOGIN" id="login"/>
+            <div id="listRolesId"></div>
+            <input type="password" placeholder="PASSWORD" id="pass1"/>
+            <input type="password" placeholder="REPEAT PASSWORD" id="pass2"/>
+            <button class="btn" id="createUser">CREATE USER</button>
+        </form>
+
+        <form class="form shadow-lg p-3 mb-5 bg-white rounded" id="formChange">
+            <img src="images/logo.gif"/>
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-4">
+                            <input type="radio" id="radioUsername" name="search"/>
+                        </div>
+                        <div class="col">
+                            <label class="text-center">BY LOGIN</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <div class="col-4">
+                            <input type="radio" id="radioDetail" name="search"/>
+                        </div>
+                        <div class="col">
+                            <label class="text-center">BY NAME</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="text" placeholder="users" autocomplete="off" list="listOpportunities" id="searchingValue"/>
+            <button class="btn" id="deleteBtn">DELETE USER</button>
+        </form>
+        <form class="form shadow-lg p-3 mb-5 bg-white rounded" id="formOpportunity">
+            <img src="images/logo.gif"/><br/>
+            <input type="text" placeholder="ROLES" list="listRoles" id="role"/>
+            <div id="opportunities"></div>
+            <button id="grantOpportunities" class="btn">CHANGE OPPORTUNITIES</button>
+        </form>
+
+        <form class="form shadow-lg p-3 mb-5 bg-white rounded" id="formCreateAccess">
+            <img src="images/logo.gif"/>
+            <input type="text" placeholder="DESCRIPTION" id="nameAccess"/>
+            <input type="text" placeholder="SERVICE" list="listServices" id="services"/>
+            <input type="text" placeholder="TYPE ACCESS" list="listTypesAccess" id="typesAccesses"/>
+            <button class="btn" id="createAccess">CREATE ACCESS</button>
+        </form>
+
+        <form class="form shadow-lg p-3 mb-5 bg-white rounded" id="formGetAccess">
+            <img src="images/logo.gif"/>
+            <input type="text" placeholder="ROLES" list="listRoles" id="roleNameFormGetAccess" style="width: 90%"/>
+            <div id="accesses"></div>
+            <button class="btn" id="findAccess">FIND ACCESS</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
