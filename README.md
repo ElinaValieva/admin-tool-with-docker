@@ -1,4 +1,4 @@
-## :name_badge: TELEKOM MICROSERVICE with ADMINISTRATION tool
+## :name_badge: T-MICROSERVICE with ADMINISTRATION tool
 
 ### Prerequsites :heavy_exclamation_mark:
 
