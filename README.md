@@ -10,7 +10,7 @@
 ### Get Started with Docker :star:
  **1. Clone the repository**
  
-`git clone http://gogs-sol-portfolio-dev01.telitcaas1.t-internal.com/elvaliev/telekom-microservices.git`
+`git clone https://github.com/ElinaValieva/admin-tool-with-docker.git`
 
  **2. In the location of `docker-compose.yml` execute the following**
  
@@ -34,7 +34,7 @@ postgres=# GRANT ALL PRIVILEGES ON DATABASE admindb TO admindb;
 
 **2. Clone repository**
 
-`git clone http://gogs-sol-portfolio-dev01.telitcaas1.t-internal.com/elvaliev/telekom-microservices.git`
+`git clone https://github.com/ElinaValieva/admin-tool-with-docker.git`
 
 **3. Compile all projects with command**
 
