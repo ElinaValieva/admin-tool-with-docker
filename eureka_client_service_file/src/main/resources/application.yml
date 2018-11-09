@@ -20,8 +20,9 @@ spring:
     hikari:
       maximum-pool-size: 5
     initialization-mode: always
-    password: filedb
-    url: jdbc:postgresql://localhost:5432/filedb
-    username: filedb
+    url: jdbc:postgresql://localhost:5432/admindb
+    username: admindb
+    password: admindb
+
 storage:
   location: ./file-repository
