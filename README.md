@@ -1,7 +1,5 @@
 ## :name_badge: T-MICROSERVICE with ADMINISTRATION tool
 
-![](https://cdn1.savepice.ru/uploads/2018/10/12/11f36731097d157b4143c82b98697087-full.png)
-
 ### Prerequsites :heavy_exclamation_mark:
 
  1. `JDK 1.8` at least - for running the app
