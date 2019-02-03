@@ -2,8 +2,8 @@
 
 ### Prerequsites :heavy_exclamation_mark:
 
- 1. `JDK 1.8` at least - for running the app
- 2. `Maven 3+`            - for bulding a package
+ 1. `JDK 1.8` at least - for running app
+ 2. `Maven 3+`            - for building package
  3. `Docker Service` *(optional)* -  for dockerized start up
  4. `PostgreSQL latest version > 9.4` *(optional)* - without dockerized start up
 
